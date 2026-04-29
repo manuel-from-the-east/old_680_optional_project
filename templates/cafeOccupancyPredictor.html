@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}1-Hour Air Products Cafeteria Occupancy Prediction Model{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<p>
+    In order to predict the number of people that will be present in the Air Products cafeteria one hour "in the future",
+    we will define the following features to be used for modeling training: </br></br>
+</p>
+
+<p>- The current day (a simple ordinal-encoded categorical variable with values 0-6)</p>
+<p>- The current time (a float representing 24 hours)</p>
+<p>- The current cafeteria occupancy (1 hour before predicted time)</p>
+<p>- The cafeteria occupancy at the same time from the previous day (24 hours before predicted time)</p>
+<p>- The cafeteria occupancy at the same time from the previous week (1 week before predicted time)</p>
+<p>- The cafeteria occupancy at the same time from the previous month (1 month before predicted time)</p>
+
+ <!-- Starts image section -->
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="{{url_for('static', filename='monday_curve.png')}}" class="gallery__img" width="400"
+                            alt="cafeOccupancyPredictionCurve" />
+                <div class="caption">
+                     <p><strong>Idealized Air Products Cafeteria Occupancy Behavior</strong></p>
+                   </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="{{url_for('static', filename='monday_curve_noisy.png')}}" class="gallery__img" width="400"
+                            alt="cafeOccupancyPredictionCurve" />
+                <div class="caption">
+                     <p><strong>Air Products Cafeteria Data</strong></p>
+                   </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="{{url_for('static', filename='PredictionCurve.png')}}" class="gallery__img" width="400"
+                            alt="cafeOccupancyPredictionCurve" />
+                <div class="caption">
+                     <p><strong>Tuesday Cafeteria Occupancy Prediction Curve</strong></p>
+                   </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ends image section -->
+
+    <!-- Starts form section -->
+    <div class="form-container ">
+        <form class="form-horizontal" action = "/predict" method="post">
+
+            <div class="form-group row">
+              <label class="control-label col-sm-2" for="curr_day">Current Day:</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="curr_day" name="curr_day">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="control-label col-sm-2" for="curr_time">Current Time:</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="curr_time" name="curr_time">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="control-label col-sm-2" for="curr_occ">Current Occupancy:</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="curr_occ" name="curr_occ">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="control-label col-sm-2" for="occ_24">Occupancy from Prior 24 Hours:</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="occ_24" name="occ_24">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="control-label col-sm-2" for="occ_week">Occupancy from Prior Week:</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="occ_week" name="occ_week">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="control-label col-sm-2" for="occ_month">Occupancy from Prior Month:</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="occ_month" name="occ_month">
+              </div>
+            </div>
+
+            <div class="form-group row">
+            <label class="control-label col-sm-2" for="">&nbsp;</label>
+              <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-primary">Predict</button>
+              </div>
+            </div>
+        </form>
+        <!-- Ends form section -->
+
+
+    </div>
+
+{% endblock %}
